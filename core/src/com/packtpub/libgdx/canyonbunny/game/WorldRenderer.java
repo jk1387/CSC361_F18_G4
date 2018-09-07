@@ -18,3 +18,4 @@ public class WorldRenderer implements Disposable {
 	
 	@Override public void dispose () { }
 }
+
