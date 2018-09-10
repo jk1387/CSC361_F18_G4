@@ -13,6 +13,9 @@ public class CanyonBunnyMain implements ApplicationListener {
 	private static final String TAG =
     CanyonBunnyMain.class.getName();
 	
+	//private varaible 
+	private boolean paused;
+	
 	//private objects
 	private WorldController worldController;
 	private WorldRenderer worldRenderer;
@@ -42,8 +45,16 @@ public class CanyonBunnyMain implements ApplicationListener {
 		// Render game world to screen
 		worldRenderer.render();
 	}
-	@Override public void resize (int width, int height) { }
+	
+	@Override public void resize (int width, int height) { 
+		worldRenderer.resize(width, height);
+	}
+	
 	@Override public void pause () { }
+	
 	@Override public void resume () { }
-    @Override public void dispose () { }
+    
+	@Override public void dispose () { 
+		worldRenderer.dispose();
+    }
 }
