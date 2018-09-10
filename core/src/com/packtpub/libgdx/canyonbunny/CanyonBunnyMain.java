@@ -1,19 +1,24 @@
-package com.packtpub.libgdx.canyonbunny;
-
 import com.badlogic.gdx.ApplicationListener;
 import com.packtpub.libgdx.canyonbunny.game.WorldController;
 import com.packtpub.libgdx.canyonbunny.game.WorldRenderer;
 import com.badlogic.gdx.Application;
+import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class CanyonBunnyMain implements ApplicationListener {
+public class CanyonBunnyMain extends ApplicationAdapter {
 
+	//batch and texture variables
+	SpriteBatch batch;
+	Texture img;
+	
 	//private static variable of type string
 	private static final String TAG =
     CanyonBunnyMain.class.getName();
 	
-	//private varaible 
+	//private variable 
 	private boolean paused;
 	
 	//private objects
