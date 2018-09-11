@@ -1,4 +1,5 @@
-import com.badlogic.gdx.ApplicationListener;
+package com.packtpub.libgdx.canyonbunny;
+
 import com.packtpub.libgdx.canyonbunny.game.WorldController;
 import com.packtpub.libgdx.canyonbunny.game.WorldRenderer;
 import com.badlogic.gdx.Application;
