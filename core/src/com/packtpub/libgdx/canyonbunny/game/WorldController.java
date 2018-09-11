@@ -21,7 +21,7 @@ public WorldController()
 }
 private void init(){
 	Gdx.input.setInputProcessor(this);
-	cameraHelper = new cameraHelper();
+	cameraHelper = new CameraHelper();
 	initTestObjects();
 }
 private void initTestObjects() {
@@ -113,7 +113,7 @@ private void handleDebugInput(float deltaTime){
 	float camZoomSpeedAccelerationFactor =5;
 	if(Gdx.input.isKeyPressed(Keys.SHIFT_LEFT))camZoomSpeed *=
 			camZoomSpeedAccelerationFactor;
-	if(Gdx.input.isKeyPressed(Keys.COMA))
+	if(Gdx.input.isKeyPressed(Keys.COMMA))
 		cameraHelper.addZoom(camZoomSpeed);
 	if(Gdx.input.isKeyPressed(Keys.PERIOD))cameraHelper.addZoom(
 			-camZoomSpeed);
