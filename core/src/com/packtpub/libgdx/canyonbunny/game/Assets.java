@@ -9,6 +9,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Disposable;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 public class Assets implements Disposable, AssetErrorListener {
 
 	 public static final String TAG = Assets.class.getName(); //get tag name
