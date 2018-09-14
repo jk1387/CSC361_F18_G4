@@ -21,6 +21,7 @@ public class Assets implements Disposable, AssetErrorListener {
 	 private Assets() {
 		 
 	 }
+	 
 public void init(AssetManager assetManager) {
 	this.assetManager = assetManager;
 	
@@ -37,8 +38,45 @@ public void init(AssetManager assetManager) {
 		Gdx.app.debug(TAG, "asset: "+a);
 	}
 }
+
+// This inner class contains a member variable called "head"
+// and will display the bunny head
+public class AssetBunny {
+	public final AtlasRegion head;
+		
+	public AssetBunny (TextureAtlas atlas) {
+		head = atlas.findRegion("bunny_head");
+	}
+}
+
+// Builds the rock platforms based on its edges around each central piece
+public class AssetRock {
+	public final AtlasRegion edge;
+	public final AtlasRegion middle;
 	
+	public AssetRock (TextureAtlas atlas) {
+		edge = atlas.findRegion("rock_edge");
+		middle = atlas.findRegion("rock_middle");
+	}
+}
+
+// Builds the assets for gold coins
+public class AssetGoldCoin {
+	public final AtlasRegion goldCoin;
 	
+	public AssetGoldCoin (TextureAtlas atlas) {
+		goldCoin = atlas.findRegion("item_gold_coin");
+	}
+}
+
+// Builds the assets for feathers
+public class AssetFeather {
+	public final AtlasRegion feather;
+	
+	public AssetFeather (TextureAtlas atlas) {
+		feather = atlas.findRegion("item_feather");
+	}
+}
 
 	@Override
 	public void dispose() {
