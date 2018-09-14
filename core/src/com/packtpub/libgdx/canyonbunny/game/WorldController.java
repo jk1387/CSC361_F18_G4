@@ -9,6 +9,9 @@ import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.packtpub.libgdx.canyonbunny.util.CameraHelper;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
+
 public class WorldController extends InputAdapter {
 private static final String TAG =
  WorldController.class.getName();
@@ -27,16 +30,15 @@ private void init(){
 private void initTestObjects() {
 	// Create new array for 5 Sprites
 	testSprites = new Sprite[5];
-	//Create empty POT sized Pixmap w/ 8 bit RGBA pixel data
-	int width = 32;
-	int height = 32;
-	Pixmap pixmap = createProceduralPixmap(width,height);
-	//create a new texture from pixmap data
-	Texture texture = new Texture(pixmap);
+	// Create a list of texture regions
+	Array<TextureRegion> regions = new Array<TextureRegion>();
+	regions.add(Assets.instance.bunny.head);
+	regions.add(Assets.instance.feather.feather);
+	regions.add(Assets.instance.goldCoin.goldCoin);
 	//create new sprites using the just created texture
 	for(int i = 0; i < testSprites.length; i++)
 	{
-		Sprite spr = new Sprite(texture);
+		Sprite spr = new Sprite(regions.random());
 		//define sprite size to be 1m X 1m in game world
 		spr.setSize(1,1);
 		//set origin to Sprites center
