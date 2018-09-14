@@ -1,3 +1,7 @@
+/**
+ * This class renders the world's objects.
+ * Author: Jacob Kole
+ */
 package com.packtpub.libgdx.canyonbunny.game;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -12,37 +16,39 @@ public class WorldRenderer implements Disposable {
 	private WorldController worldController;
 	
 	public WorldRenderer(WorldController worldController) {
-		this.worldController = worldController;
-		init();
+		this.worldController = worldController; // instance of world controller
+		init(); // initialize
 	}
 	private void init () {
-		batch = new SpriteBatch();
+		batch = new SpriteBatch(); // create a batch of sprites
 		camera = new OrthographicCamera(Constants.VIEWPORT_WIDTH,
-				Constants.VIEWPORT_HEIGHT);
-		camera.position.set(0, 0, 0);
-		camera.update();
+				Constants.VIEWPORT_HEIGHT); // makes the camera
+		camera.position.set(0, 0, 0); // set origin position
+		camera.update(); // update to new position
 	}
 	
+	// calls renderWorld to draw the game objects of the loaded level
 	public void render () {
-		renderTestObjects();
+		renderWorld(batch);
 	}
 	
-	private void renderTestObjects() {
+	// called by render
+	private void renderWorld (SpriteBatch batch) {
 		worldController.cameraHelper.applyTo(camera);
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-		for(Sprite sprite : worldController.testSprites) {
-			sprite.draw(batch);
-		}
+		worldController.level.render(batch);
 		batch.end();
 	}
 	
+	// resizes the dimension of the world
 	public void resize (int width, int height) {
 		camera.viewportWidth = (Constants.VIEWPORT_HEIGHT / height) *
 				width;
 		camera.update();
 	}
 	
+	// disposes of unused resources that build up
 	@Override public void dispose () {
 		batch.dispose();
 	}
