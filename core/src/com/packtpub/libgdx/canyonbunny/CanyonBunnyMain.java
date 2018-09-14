@@ -73,10 +73,12 @@ public class CanyonBunnyMain extends ApplicationAdapter {
 	}
 	
 	@Override public void resume () { 
+		Assets.instance.init(new AssetManager());
 		paused = false;
 	}
     
 	@Override public void dispose () { 
 		worldRenderer.dispose();
+		Assets.instance.dispose();
     }
 }
