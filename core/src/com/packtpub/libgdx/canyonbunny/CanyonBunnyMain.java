@@ -8,6 +8,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.assets.AssetManager;
+import com.packtpub.libgdx.canyonbunny.game.Assets;
 
 public class CanyonBunnyMain extends ApplicationAdapter {
 	
@@ -30,6 +32,9 @@ public class CanyonBunnyMain extends ApplicationAdapter {
 	
 		// Set Libgdx log level to DEBUG
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
+		
+		// Load assets
+		Assets.instance.init(new AssetManager());
 		
 		// Initialize controller and renderer
 		worldController = new WorldController();
