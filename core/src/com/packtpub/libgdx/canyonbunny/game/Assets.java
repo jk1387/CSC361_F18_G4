@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Disposable;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 public class Assets implements Disposable, AssetErrorListener {
 
 	 public static final String TAG = Assets.class.getName(); //get tag name
@@ -21,7 +23,11 @@ public class Assets implements Disposable, AssetErrorListener {
 	 private Assets() {
 		 
 	 }
-	 
+public AssetBunny bunny;
+public AssetRock rock;
+public AssetGoldCoin goldCoin;
+public AssetFeather feather;
+public AssetLevelDecoration levelDecoration;
 public void init(AssetManager assetManager) {
 	this.assetManager = assetManager;
 	
@@ -38,7 +44,19 @@ public void init(AssetManager assetManager) {
 		Gdx.app.debug(TAG, "asset: "+a);
 	}
 }
+TextureAtlas atlas =
+  assetManager.get(Constants.TEXTURE_ATLAS_OBJECTS);
 
+//enable texture filtering for pixel smoothing
+for(Texture t : atlas.getTextures()) {
+	t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+}
+//create game resource objects
+bunny = new AssetBunny(atlas);
+rock = new AssetRock(atlas);
+goldCoin = new assetGoldCoin(atlas);
+feather = new AssetFeather(atlas);
+levelDecoration = new assetLevelDecoration(atlas);
 // This inner class contains a member variable called "head"
 // and will display the bunny head
 public class AssetBunny {
@@ -75,6 +93,23 @@ public class AssetFeather {
 	
 	public AssetFeather (TextureAtlas atlas) {
 		feather = atlas.findRegion("item_feather");
+	}
+}
+public class AssetLevelDecoration{
+	public final AtlasRegion cloud01;
+	public final AtlasRegion cloud02;
+	public final AtlasRegion cloud03;
+	public final AtlasRegion mountainLeft;
+	public final AtlasRegion mountainRight;
+	public final AtlasRegion waterOverlay;
+	
+	public AssetLevelDecoration(TextureAtlas atlas) {
+		cloud01 = atlas.findRegion("cloud01");
+		cloud02 = atlas.findRegion("cloud02");
+		cloud03 = atlas.findRegion("cloud03");
+		mountainLeft = atlas.findRegion("mountain_left");
+		mountainRight = atlas.findRegion("mountain_right");
+		waterOverlay = atlas.findRegion("water_overlay");
 	}
 }
 
