@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class CanyonBunnyMain extends ApplicationAdapter {
-
+	
 	//batch and texture variables
 	SpriteBatch batch;
 	Texture img;
