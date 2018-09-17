@@ -37,7 +37,7 @@ public class Clouds extends AbstractGameObject{
 		init();
 	}
 	private void init() { //initialize clouds textures
-		dimension(3.0f,1.5f);
+		dimension.set(3.0f,1.5f);
 		regClouds = new Array<TextureRegion>();
 		regClouds.add(Assets.instance.levelDecoration.cloud01);
 		regClouds.add(Assets.instance.levelDecoration.cloud02);
@@ -66,9 +66,10 @@ public class Clouds extends AbstractGameObject{
 		cloud.position.set(pos);
 		return cloud;
 		}
+	
+	@Override
+	public void render(SpriteBatch batch) {
+		for(Cloud cloud : clouds)
+			cloud.render(batch);
 	}
-@Override
-public void render(SpriteBatch batch) {
-	for(Cloud cloud : clouds)
-		cloud.render(batch);
 }

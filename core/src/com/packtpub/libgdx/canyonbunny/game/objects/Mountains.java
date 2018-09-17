@@ -5,7 +5,7 @@
  */
 package com.packtpub.libgdx.canyonbunny.game.objects;
 
-import javax.lang.model.util.Elements.Origin;
+//import javax.lang.model.util.Elements.Origin;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -51,7 +51,7 @@ public class Mountains extends AbstractGameObject {
 		// mountains span the whole level
 		int mountainLength = 0;
 		mountainLength += MathUtils.ceil(length / (2 * dimension.x));
-		mountainLength += MathUtils.ceil(o.5f + offsetX);
+		mountainLength += MathUtils.ceil(0.5f + offsetX);
 		for (int i = 0; i < mountainLength; i++) {
 			// mountain left
 			reg = regMountainLeft;
