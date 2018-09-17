@@ -32,6 +32,7 @@ public class CanyonBunnyMain extends ApplicationAdapter {
 	
 		// Set Libgdx log level to DEBUG
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
+		// this allows you to see pink lines 
 		
 		// Load assets
 		Assets.instance.init(new AssetManager());
