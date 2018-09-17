@@ -46,7 +46,7 @@ public class Level {
 	public Array<Rock> rocks;
 	
 	// decoration
-	public Coulds clouds;
+	public Clouds clouds;
 	public Mountains mountains;
 	public WaterOverlay waterOverlay;
 	
