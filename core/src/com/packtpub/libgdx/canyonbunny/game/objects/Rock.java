@@ -63,4 +63,3 @@ public void render(SpriteBatch batch) {
 			true, false);
 			}
 }
-}
