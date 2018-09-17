@@ -31,6 +31,8 @@ public class WorldRenderer implements Disposable {
 		
 		// creates a second camera specifically set up just to render
 		// the game's GUI
+		cameraGUI = new OrthographicCamera(Constants.VIEWPORT_WIDTH,
+				Constants.VIEWPORT_HEIGHT); // makes the camera
 		cameraGUI.position.set(0, 0, 0); // set origin position for GUI camera
 		cameraGUI.setToOrtho(true); // flip y-axis
 		cameraGUI.update(); // makes sure the camera's updated
