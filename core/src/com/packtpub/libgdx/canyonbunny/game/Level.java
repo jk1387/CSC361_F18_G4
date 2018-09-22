@@ -1,7 +1,3 @@
-/**
- * This class compiles all the game objects and builds the level.
- * Author: Jacob Kole
- */
 package com.packtpub.libgdx.canyonbunny.game;
 
 import com.badlogic.gdx.Gdx;
@@ -13,10 +9,29 @@ import com.packtpub.libgdx.canyonbunny.game.objects.Clouds;
 import com.packtpub.libgdx.canyonbunny.game.objects.Mountains;
 import com.packtpub.libgdx.canyonbunny.game.objects.Rock;
 import com.packtpub.libgdx.canyonbunny.game.objects.WaterOverlay;
+import com.packtpub.libgdx.canyonbunny.game.objects.BunnyHead;
+import com.packtpub.libgdx.canyonbunny.game.objects.Feather;
+import com.packtpub.libgdx.canyonbunny.game.objects.GoldCoin;
 
+/**
+ * This class compiles all the game objects and builds the level.
+ * Author: Jacob Kole
+ */
 public class Level {
+	
 	public static final String TAG = Level.class.getName();
 	
+	// object member variables
+	public BunnyHead bunnyHead;
+	public Array<GoldCoin> goldcoins;
+	public Array<Feather> feathers;
+	
+	/**
+	 * Grabs the color from the image's pixel and determines
+	 * what kind of AbstractGameObject it needs to place
+	 * at that location.
+	 * @author Jacob Kole
+	 */
 	public enum BLOCK_TYPE {
 		EMPTY(0, 0, 0), // black
 		ROCK(0, 255, 0), // green
@@ -50,14 +65,29 @@ public class Level {
 	public Mountains mountains;
 	public WaterOverlay waterOverlay;
 	
-	// initiates the level through a filename
+	/**
+	 * initiates the level through a filename
+	 * @param filename name of the file for the level
+	 */
 	public Level (String filename) {
 		init(filename);
 	}
 	
+	/**
+	 * Initializes the level's objects during the level
+	 * loading process and does all the placements of the
+	 * needed AbstractGameObjects.
+	 * @param filename name of the file for the level
+	 */
 	private void init (String filename) {
-		// objects
+		// player character
+		bunnyHead = null;
+		// objects array for platforming
 		rocks = new Array<Rock>();
+		// gold coins array
+		goldcoins = new Array<GoldCoin>();
+		// feathers array
+		feathers = new Array<Feather>();
 		
 		// load image file that represents the level data
 		Pixmap pixmap = new Pixmap(Gdx.files.internal(filename));
@@ -87,6 +117,7 @@ public class Level {
 						offsetHeight = -2.5f;
 						obj.position.set(pixelX, baseHeight * obj.dimension.y 
 								* heightIncreaseFactor + offsetHeight);
+						// set the rock then add it to the rocks array
 						rocks.add((Rock)obj);
 					} else {
 						rocks.get(rocks.size - 1).increaseLength(1);
@@ -95,14 +126,31 @@ public class Level {
 				// player spawn point
 				else if
 					(BLOCK_TYPE.PLAYER_SPAWNPOINT.sameColor(currentPixel)) {
+					obj = new BunnyHead();
+					offsetHeight = -3.0f;
+					obj.position.set(pixelX,baseHeight * obj.dimension.y +
+							offsetHeight);
+					bunnyHead = (BunnyHead)obj;
 				}
 				// feather
 				else if
 					(BLOCK_TYPE.ITEM_FEATHER.sameColor(currentPixel)) {
+					obj = new Feather();
+					offsetHeight = -1.5f;
+					obj.position.set(pixelX,baseHeight * obj.dimension.y + 
+							offsetHeight);
+					// set the feather then add it to the feathers array
+					feathers.add((Feather)obj);
 				}
 				// gold coin
 				else if
 					(BLOCK_TYPE.ITEM_GOLD_COIN.sameColor(currentPixel)) {
+					obj = new GoldCoin();
+					offsetHeight = -1.5f;
+					obj.position.set(pixelX,baseHeight * obj.dimension.y + 
+							offsetHeight);
+					// set the gold coin then add it to the gold coins array
+					goldcoins.add((GoldCoin)obj);
 				}
 				// unknown object
 				else {
@@ -129,6 +177,12 @@ public class Level {
 		pixmap.dispose();
 		Gdx.app.debug(TAG,  "level '" + filename + "' loaded");
 	}
+	
+	/**
+	 * Renders all the AbstractGameObjects, interactive
+	 * and decorative.
+	 * @param batch the batch of sprites to render
+	 */
 	public void render (SpriteBatch batch) {
 		// Draw Mountains
 		mountains.render(batch);
@@ -137,10 +191,51 @@ public class Level {
 		for (Rock rock : rocks)
 			rock.render(batch);
 		
+		// Draw Gold Coins
+		for (GoldCoin goldCoin : goldcoins)
+			goldCoin.render(batch);
+		
+		// Draw Feathers
+		for (Feather feather : feathers)
+			feather.render(batch);
+		
+		// Draw Player Character
+		bunnyHead.render(batch);
+		
 		// Draw Water Overlay
 		waterOverlay.render(batch);
 		
 		// Draw Clouds
 		clouds.render(batch);
+	}
+	
+	/**
+	 * Sends updates to each of the listed AbstractGameObjects.
+	 * Those being: BunnyHead, Rocks, GoldCoins, Feathers, and Clouds.
+	 * @param deltaTime the current time
+	 */
+	public void update (float deltaTime) {
+		// update the bunny head
+		// aka: where am I, have I touched anything,
+		// what am I doing
+		bunnyHead.update(deltaTime);
+		
+		// update the rocks
+		// aka: have I been touched, am I moving
+		for(Rock rock : rocks)
+			rock.update(deltaTime);
+		
+		// update the gold coins
+		// aka: have they been picked up yet
+		for(GoldCoin goldCoin : goldocins)
+			goldCoin.update(deltaTime);
+		
+		// update the feathers
+		// aka: have they been picked up yet
+		for(Feather feather : feathers)
+			feather.update(deltaTime);
+		
+		// keeps the clouds moving
+		clouds.update(deltaTime);
 	}
 }
