@@ -3,6 +3,7 @@ package com.packtpub.libgdx.canyonbunny.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Disposable;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -194,8 +195,8 @@ public class WorldRenderer implements Disposable {
 			// draws the message
 			// HAlignment.CENTER: means to draw the font horizontally centered
 			// to the given position
-			fontGameOver.drawMultiLine(batch, "GAME OVER", x, y, 0,
-					BitmapFont.HAlignment.CENTER);
+			fontGameOver.draw(batch, "GAME OVER", x, y, 1,
+					Align.center, false);
 			fontGameOver.setColor(1, 1, 1, 1);
 		}
 	}
