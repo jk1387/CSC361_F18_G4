@@ -37,6 +37,12 @@ public abstract class AbstractGameObject {
 	
 	public void update (float deltaTime) {
 	
+		//chapter 6
+		updateMotionX(deltaTime);
+		updateMotionY(deltaTime);
+		// Move to new position
+		position.x += velocity.x * deltaTime;
+		position.y += velocity.y * deltaTime;
 	}
 	
 	//abstract render method
