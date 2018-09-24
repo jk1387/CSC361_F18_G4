@@ -1,3 +1,5 @@
+//Christian Crouthamel
+
 package com.packtpub.libgdx.canyonbunny.game.objects;
 
 import com.badlogic.gdx.Gdx;
@@ -69,8 +71,38 @@ public class BunnyHead extends AbstractGameObject {
 		break;
 		case FALLING:// Falling down
 		case JUMP_FALLING: // Falling down after jump
+			
+		     if (jumpKeyPressed && hasFeatherPowerup) {
+				timeJumping = JUMP_TIME_OFFSET_FLYING;
+				jumpState = JUMP_STATE.JUMP_RISING;
+				}
+		break;
+		}
 	};
 	
-	public void setFeatherPowerup (boolean pickedUp) {};
-	public boolean hasFeatherPowerup () {};
+	public void setFeatherPowerup (boolean pickedUp) {
+		
+		//chapter 6
+		hasFeatherPowerup = pickedUp;
+		if (pickedUp) {
+		timeLeftFeatherPowerup =Constants.ITEM_FEATHER_POWERUP_DURATION;
+		}
+	};
+	
+	public boolean hasFeatherPowerup () {
+		//chapter 6
+		return hasFeatherPowerup && timeLeftFeatherPowerup > 0;
+	};
+	
+	@Override
+	public void update (float deltaTime) {
+	super.update(deltaTime);
+	if (velocity.x != 0) {
+	viewDirection = velocity.x < 0 ? VIEW_DIRECTION.LEFT :
+	VIEW_DIRECTION.RIGHT;
+	}
+	if (timeLeftFeatherPowerup > 0) {
+	timeLeftFeatherPowerup -= deltaTime;
+	if (timeLeftFeatherPowerup < 0) {
+	// disable power-up
 }
