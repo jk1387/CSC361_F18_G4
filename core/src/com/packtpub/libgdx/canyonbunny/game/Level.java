@@ -227,7 +227,7 @@ public class Level {
 		
 		// update the gold coins
 		// aka: have they been picked up yet
-		for(GoldCoin goldCoin : goldocins)
+		for(GoldCoin goldCoin : goldcoins)
 			goldCoin.update(deltaTime);
 		
 		// update the feathers
