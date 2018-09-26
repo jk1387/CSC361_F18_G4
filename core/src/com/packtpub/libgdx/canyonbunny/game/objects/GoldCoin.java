@@ -5,7 +5,7 @@ import com.packtpub.libgdx.canyonbunny.game.Assets;
 /*
  * Author: Drake Conaway
  */
-public class GoldCoin {
+public class GoldCoin extends AbstractGameObject {
 	private TextureRegion regGoldCoin;
 	public boolean collected;
 	
@@ -34,7 +34,7 @@ public class GoldCoin {
     	
     	TextureRegion reg = null; //init reg var
     	reg = regGoldCoin; //set reg var
-    	batch.draw(reg.getTexture(), postion.x, position.y,
+    	batch.draw(reg.getTexture(), position.x, position.y,
     			origin.x, origin.y, dimension.x, dimension.y, scale.x, scale.y,
     			rotation, reg.getRegionX(), reg.getRegionY(),
     			reg.getRegionWidth(), reg.getRegionHeight(), false, false);
@@ -44,6 +44,5 @@ public class GoldCoin {
      */
     public int getScore(){
     	return 100;
-    }
     }
 }

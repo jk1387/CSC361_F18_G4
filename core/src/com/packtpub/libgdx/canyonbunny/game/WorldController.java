@@ -36,7 +36,7 @@ private Rectangle r2 = new Rectangle();
 private float timeLeftGameOverDelay;
 
 /*
- * Boolean chekcer method for if the game has ended
+ * Boolean checker method for if the game has ended
  */
 public boolean isGameOver(){
 	return lives < 0;
@@ -78,7 +78,7 @@ private void onCollisionBunnyHeadWithRock(Rock rock) {
 	}
 };
 private void onCollisionBunnyWithGoldCoin(GoldCoin goldcoin) {
-	goldCoin.collected = true;
+	goldcoin.collected = true;
 	score += goldcoin.getScore();
 	Gdx.app.log(TAG, "Gold coin collected");
 };
@@ -170,7 +170,7 @@ public void update(float deltaTime){
 	level.update(deltaTime);
 	testCollisions();
 	cameraHelper.update(deltaTime);
-	if(!isGameOver() && isPlayerInWater())){
+	if(!isGameOver() && isPlayerInWater()){
 		lives--;
 		if(isGameOver())
 			timeLeftGameOverDelay = Constants.TIME_DELAY_GAME_OVER;
@@ -237,7 +237,7 @@ private void handleInputGame(float deltaTime){
 		//player movement
 		if(Gdx.input.isKeyPressed(Keys.LEFT)){
 			level.bunnyHead.velocity.x =
-					=level.bunnyHead.terminalVelocity.x;
+					level.bunnyHead.terminalVelocity.x;
 		} else if(Gdx.input.isKeyPressed(Keys.RIGHT)){
 			level.bunnyHead.velocity.x=
 					level.bunnyHead.terminalVelocity.x;
