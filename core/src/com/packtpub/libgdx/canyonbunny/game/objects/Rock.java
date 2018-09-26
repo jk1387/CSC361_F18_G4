@@ -23,6 +23,9 @@ private void init() {
 }
 public void setLength(int length) {
 	this.length = length; //set rock length to val
+	
+	// Update bounding box for collision detection
+	bounds.set(0, 0, dimension.x * length, dimension.y);
 }
 public void increaseLength(int amount) {
 	setLength(length + amount); //increase rock length

@@ -1,5 +1,11 @@
 package com.packtpub.libgdx.canyonbunny.util;
 
+/**
+ * Sets all the constants for the game. These include the level/camera
+ * dimensions, texture atlas dirctory path for objects, level png,
+ * and number of starting lives.
+ * @author Jacob Kole
+ */
 public class Constants {
 	// Visible game world is 5 meters wide
 	public static final float VIEWPORT_WIDTH = 5.0f;
@@ -9,6 +15,7 @@ public class Constants {
 	
 	// GUI Width
 	public static final float VIEWPORT_GUI_WIDTH = 800.0f;
+	
 	// GUI Height
 	public static final float VIEWPORT_GUI_HEIGHT = 480.0f;
 	
@@ -20,4 +27,7 @@ public class Constants {
 	
 	// Amount of extra lives at level start
 	public static final int LIVES_START = 3;
+	
+	// Delay after game over
+	public static final float TIME_DELAY_GAME_OVER = 3;
 }
