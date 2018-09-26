@@ -1,9 +1,9 @@
 package com.packtpub.libgdx.canyonbunny.util;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.packtpub.libgdx.canyonbunny.game.objects.AbstractGameObject;
 
 /**
  * Allows the moving of the camera around the level. This sets
@@ -20,7 +20,7 @@ public class CameraHelper {
 	// position, zoom, target variables
 	private Vector2 position;
 	private float zoom;
-	private Sprite target;
+	private AbstractGameObject target;
 	
 	/**
 	 * Initialize the camera helper with the vector position
@@ -41,8 +41,8 @@ public class CameraHelper {
 		if (!hasTarget()) return ;
 		
 		// updates the current position
-		position.x = target.getX() + target.getOriginX();
-		position.y = target.getY() + target.getOriginY();
+		position.x = target.position.x + target.origin.x;
+		position.y = target.position.y + target.origin.y;
 		
 		// Prevents camera from moving down too far
 		position.y = Math.max(-1f, position.y);
@@ -87,13 +87,13 @@ public class CameraHelper {
 	 * Sets the target of focus for the camera.
 	 * @param target the target of focus
 	 */
-	public void setTarget (Sprite target) { this.target = target; }
+	public void setTarget (AbstractGameObject target) { this.target = target; }
 	
 	/**
 	 * Gets the target and builds a Sprite for it.
 	 * @return target the target to build
 	 */
-	public Sprite getTarget () { return target; }
+	public AbstractGameObject getTarget () { return target; }
 	
 	/**
 	 * Checks if the camera has a target.
@@ -106,7 +106,7 @@ public class CameraHelper {
 	 * @param target the target to be checked
 	 * @return whether or not the sprite target matches with found target
 	 */
-	public boolean hasTarget (Sprite target) {
+	public boolean hasTarget (AbstractGameObject target) {
 		return hasTarget() && this.target.equals(target);
 	}
 	
