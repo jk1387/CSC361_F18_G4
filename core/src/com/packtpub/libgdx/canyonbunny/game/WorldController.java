@@ -33,6 +33,17 @@ public int lives;
 public int score;
 private Rectangle r1 = new Rectangle();
 private Rectangle r2 = new Rectangle();
+private float timeLeftGameOverDelay;
+
+/*
+ * Boolean chekcer method for if the game has ended
+ */
+public boolean isGameOver(){
+	return lives < 0;
+}
+public boolean isPlayerInWater(){
+	return level.bunnyHead.position.y < -5;
+}
 /*
  * Collision based methods
  */
@@ -130,6 +141,7 @@ private void init(){
 	Gdx.input.setInputProcessor(this);
 	cameraHelper = new CameraHelper();
 	lives = Constants.LIVES_START;
+	timeLeftGameOverDelay = 0;
 	initLevel();
 }
 
@@ -149,9 +161,22 @@ private Pixmap createProceduralPixmap(int width, int height){
 }
 public void update(float deltaTime){
 	handleDebugInput(deltaTime);
+	if(isGameOver()){
+		timeLeftGameOverDelay -= deltaTime;
+		if(timeLeftGameOverDelay < 0) init();
+	} else{
+	}
+	handleInputGame(deltaTime);
 	level.update(deltaTime);
 	testCollisions();
 	cameraHelper.update(deltaTime);
+	if(!isGameOver() && isPlayerInWater())){
+		lives--;
+		if(isGameOver())
+			timeLeftGameOverDelay = Constants.TIME_DELAY_GAME_OVER;
+		else
+			initLevel();
+	}
 	
 }
 
@@ -200,7 +225,7 @@ public boolean keyUp(int keycode){
 		Gdx.app.debug(TAG, "Game world restarted");
 	}
 	//Toggle camera follow
-	else if(keycode = Keys.ENTER){
+	else if(keycode == Keys.ENTER){
 		cameraHelper.setTarget(cameraHelper.hasTarget() ? null: level.bunnyHead);
 		Gdx.app.debug(TAG, "Camera follow enabled: "
 				+cameraHelper.hasTarget());
@@ -208,7 +233,7 @@ public boolean keyUp(int keycode){
 	return false;
 }
 private void handleInputGame(float deltaTime){
-	if(camearaHelper.hasTarget(level.bunnyHead)){
+	if(cameraHelper.hasTarget(level.bunnyHead)){
 		//player movement
 		if(Gdx.input.isKeyPressed(Keys.LEFT)){
 			level.bunnyHead.velocity.x =
