@@ -104,8 +104,8 @@ private void testCollisions() {
 		break;
 	}
 	//test collsion: Bunny Head <-> Feathers
-	for(Feather featehr : level.feathers){
-		if(featehr.collected) continue;
+	for(Feather feather : level.feathers){
+		if(feather.collected) continue;
 		r2.set(feather.position.x, feather.position.y,
 				feather.bounds.width, feather.bounds.height);
 		if(!r1.overlaps(r2)) continue;
@@ -113,9 +113,13 @@ private void testCollisions() {
 		break;
 	}
 }
+/*
+ * Level initialization method
+ */
 private void initLevel() {
 	score = 0;
 	level = new Level(Constants.LEVEL_01);
+	cameraHelper.setTarget(level.bunnyHead);
 }
 public CameraHelper cameraHelper;
 public WorldController()
@@ -154,6 +158,7 @@ public void update(float deltaTime){
 private void handleDebugInput(float deltaTime){
 	if(Gdx.app.getType()!= ApplicationType.Desktop) return;
 	
+	if(!cameraHelper.hasTarget(level.bunnyHead)){
 	//Camera Controls(move)
 	float camMoveSpeed = 5*deltaTime;
 	float camMoveSpeedAccelerationFactor =5;
@@ -180,6 +185,7 @@ private void handleDebugInput(float deltaTime){
 	if(Gdx.input.isKeyPressed(Keys.SLASH))cameraHelper.setZoom(1);
 		
 }
+}
 
 private void moveCamera(float x, float y){
  x += cameraHelper.getPosition().x;
@@ -193,7 +199,37 @@ public boolean keyUp(int keycode){
 		init();
 		Gdx.app.debug(TAG, "Game world restarted");
 	}
-	
+	//Toggle camera follow
+	else if(keycode = Keys.ENTER){
+		cameraHelper.setTarget(cameraHelper.hasTarget() ? null: level.bunnyHead);
+		Gdx.app.debug(TAG, "Camera follow enabled: "
+				+cameraHelper.hasTarget());
+	}
 	return false;
+}
+private void handleInputGame(float deltaTime){
+	if(camearaHelper.hasTarget(level.bunnyHead)){
+		//player movement
+		if(Gdx.input.isKeyPressed(Keys.LEFT)){
+			level.bunnyHead.velocity.x =
+					=level.bunnyHead.terminalVelocity.x;
+		} else if(Gdx.input.isKeyPressed(Keys.RIGHT)){
+			level.bunnyHead.velocity.x=
+					level.bunnyHead.terminalVelocity.x;
+		}else{
+			//Execute auto-forward movement on non-desktop platform
+			if(Gdx.app.getType() != ApplicationType.Desktop){
+				level.bunnyHead.velocity.x =
+						level.bunnyHead.terminalVelocity.x;
+			}
+		}
+		//Bunny Jump
+		if(Gdx.input.isTouched() ||
+				Gdx.input.isKeyPressed(Keys.SPACE)){
+			level.bunnyHead.setJumping(true);
+		} else{
+			level.bunnyHead.setJumping(false);
+		}
+	}
 }
 }
