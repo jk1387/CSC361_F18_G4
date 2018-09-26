@@ -13,12 +13,68 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.packtpub.libgdx.canyonbunny.game.objects.Rock;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
+import com.badlogic.gdx.math.Rectangle;
+import com.packtpub.libgdx.canyonbunny.game.objects.BunnyHead;
+import com.packtpub.libgdx.canyonbunny.game.objects.BunnyHead.JUMP_STATE;
+import com.packtpub.libgdx.canyonbunny.game.objects.Feather;
+import com.packtpub.libgdx.canyonbunny.game.objects.GoldCoin;
+import com.packtpub.libgdx.canyonbunny.game.objects.Rock;
+import com.badlogic.gdx.math.Rectangle;
+import com.packtpub.libgdx.canyonbunny.game.objects.BunnyHead;
+import com.packtpub.libgdx.canyonbunny.game.objects.BunnyHead.JUMP_STATE;
+import com.packtpub.libgdx.canyonbunny.game.objects.Feather;
+import com.packtpub.libgdx.canyonbunny.game.objects.GoldCoin;
+import com.packtpub.libgdx.canyonbunny.game.objects.Rock;
 public class WorldController extends InputAdapter {
 private static final String TAG =
  WorldController.class.getName();
 public Level level;
 public int lives;
 public int score;
+private Rectangle r1 = new Rectangle();
+private Rectangle r2 = new Rectangle();
+/*
+ * Collision based methods
+ */
+private void onCollisionBunnyHeadWithRock(Rock rock) {};
+private void onCollisionBunnyWithGoldCoin(GoldCoin goldcoin) {};
+private void onCollisionBunnyWithFeather(Feather feather) {};
+/*
+ * Method for testing the collision of the
+ * bunnyhead with objects
+ */
+private void testCollisions() {
+	r1.set(level.bunnyHead.position.x, level.bunnyHead.position.y,
+			level.bunnyHead.bounds.width, level.bunnyHead.bounds.height);
+
+//Test collison: Bunnny <-> Rocks
+	for(Rock rock : level.rocks){
+		r2.set(rock.position.x, rock.position.y, rock.bounds.width,
+				rock.bounds.height);
+		if(!r1.overlaps(r2)) continue;
+		onCollisionBunnyHeadWithRock(rock);
+		//IMPORTANT: must do all collisions for valid
+		//edge testing on rocks
+	}
+	 //Test collision: BunnyHead <-> Gold Coins
+	for(GoldCoin goldcoin : level.goldcoins){
+		if(goldcoin.collected) continue;
+		r2.set(goldcoin.position.x, goldcoin.position.y,
+				goldcoin.bounds.width, goldcoin.bounds.height);
+		if(!r1.overlaps(r2)) continue;
+		onCollisionBunnyWithGoldCoin(goldcoin);
+		break;
+	}
+	//test collsion: Bunny Head <-> Feathers
+	for(Feather featehr : level.feathers){
+		if(featehr.collected) continue;
+		r2.set(feather.position.x, feather.position.y,
+				feather.bounds.width, feather.bounds.height);
+		if(!r1.overlaps(r2)) continue;
+		onCollisionBunnyWithFeather(feather);
+		break;
+	}
+}
 private void initLevel() {
 	score = 0;
 	level = new Level(Constants.LEVEL_01);
