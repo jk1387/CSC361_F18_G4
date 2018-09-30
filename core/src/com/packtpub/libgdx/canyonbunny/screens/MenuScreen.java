@@ -52,13 +52,13 @@ public class MenuScreen extends AbstractGameScreen {
  private final float DEBUG_REBUILD_INTERVAL = 5.0f;
  private boolean debugEnabled = false;
  private float debugRebuildStage;
- /*
+ /**
   * Menu screen constructor
   */
  public MenuScreen(Game game){
 	 super(game);
  }
- /*
+ /**
   * Method to rebuild the stage/
   * select the skin from texture atlas
   */
@@ -85,7 +85,7 @@ public class MenuScreen extends AbstractGameScreen {
 	 stack.add(layerControls);
 	 stage.addActor(layerOptionsWindow);
  }
- /*
+ /**
   * Render method for the 
   * game screens
   */
@@ -93,21 +93,71 @@ public class MenuScreen extends AbstractGameScreen {
  public void render(float deltaTime){
 	 Gdx.g1.g1ClearColor(0.0f,0.0f,0.0f,1.0f);
 	 Gdx.g1.g1Clear(GL20.GL_COLOR_BUFFER_BIT);
-	 if(Gdx.input.isTouched())
-		 Game.setScreen(new GameScreen(game));
+	 if(debugEnabled){
+		 debugRebuildStage -= deltaTime;
+		 if(debugRebuildStage <=0){
+			 debugRebuildStage = DEBUG_REBUILD_INTERVAL;
+		 }
+	 }
+	 stage.act(deltaTime);
+	 stage.draw();
+	 Table.drawDebug(stage);
+		 }
+	 
+ 
+ @Override
+	public void resize(int width, int height){
+		stage.getViewport().update(width, height,true);
+	}
+ /**
+  * Initialize the stage and sets it as 
+  * libGdx's input processor
+  */
+ @Override public void show(){
+	 stage = new Stage(new StretchViewport(Constants.VIEWPORT_GUI_WIDTH,
+			 Constants.VIEWPORT_GUI_HEIGHT));
+	 Gdx.input.setInputProcessor(stage);
+	 rebuildStage();
  }
- @Override public void resize(int width, int height){}
- @Override public void show(){}
- @Override public void hide(){}
+ /**
+  * clear skins
+  */
+ @Override public void hide(){
+	 stage.dispose();
+	 skinCanyonBunny.dispose();
+ }
  @Override public void pause(){}
  
  
+	/**
+	 * 
+	 * @return table layer for background
+	 * controls
+	 */
+	private Table buildBackgroundLayer(){
+		Table layer = new Table();
+		return layer;
+	}
 	
+	/**
+	 * @return table of controls for 
+	 * building objects
+	 */
+	public Table buildObjectsLayer(){
+		Table layer = new Table();
+		return layer;
+	}
+	/**
+	 * @return table of controls for options
+	 * window
+	 */
+	private Table buildOptionsWindowLayer(){
+		Table layer = new Table();
+		return layer;
+	}
+	 
 	
-	
-	
-	
-	
+
 	
 	
 	
