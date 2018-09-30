@@ -22,6 +22,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.packtpub.libgdx.canyonbunny.game.Assets;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.packtpub.libgdx.canyonbunny.util.CharacterSkin;
+import com.packtpub.libgdx.canyonbunny.util.GamePreferences;
 
 /*
  * Author: Drake Conaway
@@ -44,6 +46,7 @@ public class MenuScreen extends AbstractGameScreen {
  private TextButton btnWinOptCancel;
  private CheckBox chkSound;
  private Slider sldSound;
+ private Slider sldMusic;
  private CheckBox chkMusic;
  private SelectBox<CharacterSkin> selCharSkin;
  private Image imgCharSkin;
@@ -52,11 +55,64 @@ public class MenuScreen extends AbstractGameScreen {
  private final float DEBUG_REBUILD_INTERVAL = 5.0f;
  private boolean debugEnabled = false;
  private float debugRebuildStage;
+ 
+ private Skin skinLibgdx;
  /**
   * Menu screen constructor
   */
  public MenuScreen(Game game){
 	 super(game);
+ }
+ /**
+  * load game preference settings
+  */
+ private void loadSettings(){
+	 GamePreferences prefs = GamePreferences.instance;
+	 prefs.load();
+	 chkSound.setChecked(prefs.sound);
+	 sldSound.setValue(prefs.volSound);
+	 chkMusic.setChecked(prefs.music);
+	 sldMusic.setValue(prefs.volMusic);
+	 selCharSkin.setSelectedIndex(prefs.charSkin);
+	 onCharSkinSelected(prefs.charSkin);
+	 chkShowFpsCounter.setChecked(prefs.showFpsCounter);
+ }
+ 
+ /**
+  * Save settings for preferences
+  */
+ private void saveSettings(){
+	 GamePreferences prefs = GamePreferences.instance;
+	 prefs.sound = chkSound.isChecked();
+	 prefs.volSound = sldSound.getValue();
+	 prefs.music = chkMusic.isChecked();
+	 prefs.volMusic = sldMusic.getValue();
+	 prefs.charSkin = selCharSkin.getSelectedIndex();
+	 prefs.showFpsCounter = chkShowFpsCounter.isChecked();
+	 prefs.save();
+ }
+ /**
+  * Set color of character skins
+  * to selected index
+  */
+ private void onCharSkinSelected(int index){
+	 CharacterSkin skin = CharacterSkin.values()[index];
+	 imgCharSkin.setColor(skin.getColor());
+ }
+ /**
+  * Save the settings
+  */
+ private void onSaveClicked(){
+	 saveSettings();
+	 onCancelClicked();
+ }
+ /**
+  * Set visibility values after saving
+  */
+ private void onCancelClicked(){
+	 btnMenuPlay.setVisible(true);
+	 btnMenuOptions.setVisible(true);
+	 winOptions.setVisible(false);
  }
  /**
   * Method to rebuild the stage/
@@ -66,6 +122,9 @@ public class MenuScreen extends AbstractGameScreen {
 	 skinCanyonBunny = new Skin(
 			 Gdx.files.internal(Constants.SKIN_CANYONBUNNY_UI),
 			 new TextureAtlas(Constants.TEXTURE_ATLAS_UI));
+	 skinLibgdx = new Skin(
+			 Gdx.files.internal(Constants.SKIN_LIBGDX_UI),
+			 new TextureAtlas(Constants.TEXTURE_ATLAS_LIBGDX_UI));
 	 //build all layers
 	 Table layerBackground = buildBackgroundLayer();
 	 Table layerObjects = buildObjectsLayer();
@@ -129,6 +188,35 @@ public class MenuScreen extends AbstractGameScreen {
  @Override public void pause(){}
  
  
+ 
+ /**
+  * Build the audio options table
+  */
+ private Table buildOptWinAudioSettings(){
+	 Table tbl = new Table();
+	 // + Title: Audio
+	 tbl.pad(10,10,0,10);
+	 tbl.add(new Label("Audio", skinLibgdx,"default-font",
+			 Color.ORANGE)).colspan(3);
+	 tbl.row();
+	 tbl.columnDefaults(0).padRight(10);
+	 tbl.columnDefaults(1).padRight(10);
+	 // + Checkbox, "sound" label, volume slider
+	 chkSound = new CheckBox("",skinLibgdx);
+	 tbl.add(chkSound);
+	 tbl.add(new Label("Label",skinLibgdx));
+	 sldSound = new Slider(0.0f, 1.0f, 0.1f,false, skinLibgdx);
+	 tbl.add(sldSound);
+	 tbl.row();
+	 // +Checkbox "Music" label, music vol slider
+	 chkMusic = new CheckBox("", skinLibgdx);
+	 tbl.add(new Label("Music", skinLibgdx));
+	 sldMusic = new Slider(0.0f,1.0f,0.1f,false,skinLibgdx);
+	 tbl.add(sldMusic);
+	 tbl.row();
+	 return tbl;
+			 
+ }
 	/**
 	 * 
 	 * @return table layer for background
