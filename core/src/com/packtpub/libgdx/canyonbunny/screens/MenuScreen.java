@@ -217,6 +217,32 @@ public class MenuScreen extends AbstractGameScreen {
 	 return tbl;
 			 
  }
+/**
+ * @return table of options
+ */
+	 private Table buildOptWinSkinSelection () {
+	 Table tbl = new Table();
+	 // + Title: "Character Skin"
+	 tbl.pad(10, 10, 0, 10);
+	 tbl.add(new Label("Character Skin", skinLibgdx,
+	 "default-font", Color.ORANGE)).colspan(2);
+	 tbl.row();
+	 // + Drop down box filled with skin items
+	 selCharSkin = new SelectBox<CharacterSkin>(skinLibgdx);
+	 selCharSkin.setItems(CharacterSkin.values());
+	 selCharSkin.addListener(new ChangeListener() {
+	 @Override
+	 public void changed(ChangeEvent event, Actor actor) {
+	 onCharSkinSelected(((SelectBox<CharacterSkin>)
+	 actor).getSelectedIndex());
+	 }
+	 });
+	 tbl.add(selCharSkin).width(120).padRight(20);
+	 // + Skin preview image
+	 imgCharSkin = new Image(Assets.instance.bunny.head);
+	 tbl.add(imgCharSkin).width(50).height(50);
+	 return tbl;
+	 }
 	/**
 	 * 
 	 * @return table layer for background
@@ -251,12 +277,93 @@ public class MenuScreen extends AbstractGameScreen {
 	 * window
 	 */
 	private Table buildOptionsWindowLayer(){
-		Table layer = new Table();
-		return layer;
-	}
-	 
+		winOptions = new Window("Options", skinLibgdx);
+		// + Audio Settings: Sound/Music CheckBox and Volume Slider
+		winOptions.add(buildOptWinAudioSettings()).row();
+		// + Character Skin: Selection Box (White, Gray, Brown)
+		winOptions.add(buildOptWinSkinSelection()).row();
+		// + Debug: Show FPS Counter
+		winOptions.add(buildOptWinDebug()).row();
+		// + Separator and Buttons (Save, Cancel)
+		winOptions.add(buildOptWinButtons()).pad(10, 0, 10, 0);
+		// Make options window slightly transparent
+		winOptions.setColor(1, 1, 1, 0.8f);
+		// Hide options window by default
+		winOptions.setVisible(false);
+		if (debugEnabled) winOptions.debug();
+		  // Let TableLayout recalculate widget sizes and positions
+		winOptions.pack();
+		  // Move options window to bottom right corner
+		winOptions.setPosition
+		(Constants.VIEWPORT_GUI_WIDTH - winOptions.getWidth() - 50,
+		   50);
+		return winOptions;
+		}
 	
+	 /**
+	  * Build the table controls for option
+	  * window
+	  * @return table of controls
+	  */
+	private Table buildOptWinDebug () {
+		Table tbl = new Table();
+		// + Title: "Debug"
+		tbl.pad(10, 10, 0, 10);
+		tbl.add(new Label("Debug", skinLibgdx, "default-font",
+		Color.RED)).colspan(3);
+		tbl.row();
+		tbl.columnDefaults(0).padRight(10);
+		tbl.columnDefaults(1).padRight(10);
+		// + Checkbox, "Show FPS Counter" label
+		chkShowFpsCounter = new CheckBox("", skinLibgdx);
+		tbl.add(new Label("Show FPS Counter", skinLibgdx));
+		tbl.add(chkShowFpsCounter);
+		tbl.row();
+		return tbl;
+		}
 
+	/**
+	 * Build table of option window
+	 * buttons, 
+	 * @return table 
+	 */
+	private Table buildOptWinButtons(){
+		Table tbl = new Table();
+		// + Separator
+		Label lbl = null;
+		lbl = new Label("",skinLibgdx);
+		lbl.setColor(0.75f, 0.75f, 0.75f, 1);
+		lbl.setStyle(new LabelStyle(lbl.getStyle()));
+		lbl.getStyle().background = skinLibgdx.newDrawable("white");
+		tbl.add(lbl).colspan(2).height(1).width(220).pad(0, 0, 0, 1);
+		tbl.row();
+		lbl = new Label("", skinLibgdx);
+		lbl.setColor(0.5f, 0.5f, 0.5f, 1);
+		lbl.setStyle(new LabelStyle(lbl.getStyle()));
+		lbl.getStyle().background = skinLibgdx.newDrawable("white");
+		tbl.add(lbl).colspan(2).height(1).width(220).pad(0, 1, 5, 0);
+		tbl.row();
+		// + Save Button with event handler
+		btnWinOptSave = new TextButton("Save", skinLibgdx);
+		tbl.add(btnWinOptSave).padRight(30);
+		btnWinOptSave.addListener(new ChangeListener() {
+		   @Override
+		      public void changed (ChangeEvent event, Actor actor) {
+		       onSaveClicked();
+		     }
+		});
+		// + Cancel Button with event handler
+		btnWinOptCancel = new TextButton("Cancel", skinLibgdx);
+		tbl.add(btnWinOptCancel);
+		btnWinOptCancel.addListener(new ChangeListener() {
+		  @Override
+		   public void changed (ChangeEvent event, Actor actor) {
+		      onCancelClicked();
+		         }
+		});
+		return tbl;
+		}
+	
 	
 	
 	
@@ -319,5 +426,10 @@ public class MenuScreen extends AbstractGameScreen {
 		game.setScreen(new GameScreen(game));
 	}
 	
-	private void onOptionsClicked () { }
+	private void onOptionsClicked () {
+		loadSettings();
+		btnMenuPlay.setVisible(false);
+		btnMenuOptions.setVisible(false);
+		winOptions.setVisible(true);
+	}
 }
