@@ -1,9 +1,38 @@
 package com.packtpub.libgdx.canyonbunny.screens;
-
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-
+/*
+ * Author: Drake Conaway
+ */
 public class MenuScreen extends AbstractGameScreen {
-	
+ private final String TAG = MenuScreen.class.getName();
+ 
+ /*
+  * Menu screen constructor
+  */
+ public MenuScreen(Game game){
+	 super(game);
+ }
+ 
+ /*
+  * Render method for the 
+  * game screens
+  */
+ @Override
+ public void render (float deltaTime){
+	 Gdx.g1.g1ClearColor(0.0f,0.0f,0.0f,1.0f);
+	 Gdx.g1.g1Clear(GL20.GL_COLOR_BUFFER_BIT);
+	 if(Gdx.input.isTouched())
+		 Game.setScreen(new GameScreen(game));
+ }
+ @Override public void resize(int width, int height){}
+ @Override public void show(){}
+ @Override public void hide(){}
+ @Override public void pause(){}
+ 
+ 
 	
 	
 	
