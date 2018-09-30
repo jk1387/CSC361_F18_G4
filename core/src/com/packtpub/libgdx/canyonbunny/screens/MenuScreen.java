@@ -22,6 +22,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.packtpub.libgdx.canyonbunny.game.Assets;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.packtpub.libgdx.canyonbunny.util.CharacterSkin;
+import com.packtpub.libgdx.canyonbunny.util.GamePreferences;
 
 /*
  * Author: Drake Conaway
