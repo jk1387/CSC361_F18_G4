@@ -1,5 +1,8 @@
 package com.packtpub.libgdx.canyonbunny.util;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
+
 /**
  * Sets all the constants for the game. These include the level/camera
  * dimensions, texture atlas dirctory path for objects, level png,
@@ -49,4 +52,6 @@ public class Constants {
 	
 	// Powerup duration for the feather
 	public static final float ITEM_FEATHER_POWERUP_DURATION = 9;
+	
+	public static final String PREFERENCES = "settings.prefs";
 }
