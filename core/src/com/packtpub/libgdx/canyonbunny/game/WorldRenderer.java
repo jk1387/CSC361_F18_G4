@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.packtpub.libgdx.canyonbunny.util.GamePreferences;
 
 /**
  * This class renders the world's objects and its GUI.
@@ -105,7 +106,8 @@ public class WorldRenderer implements Disposable {
 		// (anchored to top right edge)
 		renderGuiExtraLive(batch);
 		// draw FPS text
-		// (anchored to bottom right edge)
+		// draw FPS text (anchored to bottom right edge)
+		if (GamePreferences.instance.showFpsCounter)
 		renderGuiFpsCounter(batch);
 		// draw game over text
 		renderGuiGameOverMessage(batch);
