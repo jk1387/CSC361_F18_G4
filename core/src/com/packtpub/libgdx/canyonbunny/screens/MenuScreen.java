@@ -161,8 +161,8 @@ public class MenuScreen extends AbstractGameScreen {
 	 }
 	 stage.act(deltaTime);
 	 stage.draw();
-	 stage.setDebugAll(true);
-		 }
+	 stage.setDebugAll(debugEnabled); // THIS TURNS DEBUG ON AND OFF. Set to true to see debug lines
+ 	}
 	 
  
  @Override
