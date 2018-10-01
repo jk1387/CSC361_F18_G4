@@ -1,4 +1,5 @@
 package com.packtpub.libgdx.canyonbunny.game;
+
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
@@ -25,12 +26,19 @@ import com.packtpub.libgdx.canyonbunny.game.objects.BunnyHead.JUMP_STATE;
 import com.packtpub.libgdx.canyonbunny.game.objects.Feather;
 import com.packtpub.libgdx.canyonbunny.game.objects.GoldCoin;
 import com.packtpub.libgdx.canyonbunny.game.objects.Rock;
+import com.badlogic.gdx.Game;
+import com.packtpub.libgdx.canyonbunny.screens.MenuScreen;
+
+
 public class WorldController extends InputAdapter {
-private static final String TAG =
+
+	private static final String TAG =
  WorldController.class.getName();
 public Level level;
 public int lives;
 public int score;
+private Game game;
+
 private Rectangle r1 = new Rectangle();
 private Rectangle r2 = new Rectangle();
 private float timeLeftGameOverDelay;
@@ -257,4 +265,11 @@ private void handleInputGame(float deltaTime){
 		}
 	}
 }
+	/*
+	 * save a reference to the game instance 
+	 */
+	private void backToMenu () {
+		// switch to menu screen
+		game.setScreen(new MenuScreen(game));
+	}
 }
