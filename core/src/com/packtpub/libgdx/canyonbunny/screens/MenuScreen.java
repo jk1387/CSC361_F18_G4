@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.packtpub.libgdx.canyonbunny.game.Assets;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -136,8 +137,7 @@ public class MenuScreen extends AbstractGameScreen {
 	 stage.clear();
 	 Stack stack = new Stack();
 	 stage.addActor(stack);
-	 stage.setSize(Constants.VIEWPORT_GUI_WIDTH,
-			 Constants.VIEWPORT_GUI_HEIGHT);
+	 stack.setSize(Constants.VIEWPORT_GUI_WIDTH,Constants.VIEWPORT_GUI_HEIGHT);
 	 stack.add(layerBackground);
 	 stack.add(layerObjects);
 	 stack.add(layerLogos);
@@ -150,17 +150,18 @@ public class MenuScreen extends AbstractGameScreen {
   */
  @Override
  public void render(float deltaTime){
-	 Gdx.g1.g1ClearColor(0.0f,0.0f,0.0f,1.0f);
-	 Gdx.g1.g1Clear(GL20.GL_COLOR_BUFFER_BIT);
+	 Gdx.gl.glClearColor(0.0f,0.0f,0.0f,1.0f);
+	 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	 if(debugEnabled){
 		 debugRebuildStage -= deltaTime;
 		 if(debugRebuildStage <=0){
 			 debugRebuildStage = DEBUG_REBUILD_INTERVAL;
+		 rebuildStage();
 		 }
 	 }
 	 stage.act(deltaTime);
 	 stage.draw();
-	 Table.drawDebug(stage);
+	 stage.setDebugAll(true);
 		 }
 	 
  
@@ -392,7 +393,7 @@ public class MenuScreen extends AbstractGameScreen {
 		btnMenuOptions.addListener(new ChangeListener() {
 			@Override
 			public void changed (ChangeEvent event, Actor actor) {
-				onOptionClicked();
+				onOptionsClicked();
 			}
 		});
 		if (debugEnabled) layer.debug();
