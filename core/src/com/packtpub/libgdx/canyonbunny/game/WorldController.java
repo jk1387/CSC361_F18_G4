@@ -141,8 +141,13 @@ private void initLevel() {
 	cameraHelper.setTarget(level.bunnyHead);
 }
 public CameraHelper cameraHelper;
-public WorldController()
+
+/*
+ * constructor for world controller
+ */
+public WorldController(Game game)
 {
+	this.game = game;
 	init();
 }
 private void init(){
@@ -171,7 +176,7 @@ public void update(float deltaTime){
 	handleDebugInput(deltaTime);
 	if(isGameOver()){
 		timeLeftGameOverDelay -= deltaTime;
-		if(timeLeftGameOverDelay < 0) init();
+		if(timeLeftGameOverDelay < 0) backToMenu();
 	} else{
 	}
 	handleInputGame(deltaTime);
@@ -237,6 +242,10 @@ public boolean keyUp(int keycode){
 		cameraHelper.setTarget(cameraHelper.hasTarget() ? null: level.bunnyHead);
 		Gdx.app.debug(TAG, "Camera follow enabled: "
 				+cameraHelper.hasTarget());
+	}
+	// Back to Menu
+	else if (keycode == Keys.ESCAPE || keycode == Keys.BACK) {
+	backToMenu();
 	}
 	return false;
 }
