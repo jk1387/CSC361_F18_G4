@@ -71,6 +71,7 @@ public class Level {
 	 */
 	public Level (String filename) {
 		init(filename);
+		bunnyHead.position.y = 1.0f;
 	}
 	
 	/**
