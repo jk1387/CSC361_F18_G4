@@ -7,8 +7,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.packtpub.libgdx.canyonbunny.game.Assets;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 
 public class BunnyHead extends AbstractGameObject {
+	
+	public ParticleEffect dustParticles = new ParticleEffect();
 	
 	//Chapter 6
 	public static final String TAG = BunnyHead.class.getName();
