@@ -44,6 +44,7 @@ public class WorldController extends InputAdapter {
 	public CameraHelper cameraHelper;
 	
 	public float livesVisual;
+	public float scoreVisual;
 
 	private Rectangle r1 = new Rectangle();
 	private Rectangle r2 = new Rectangle();
@@ -165,6 +166,7 @@ public class WorldController extends InputAdapter {
 	 */
 	private void initLevel() {
 		score = 0;
+		scoreVisual = score;
 		level = new Level(Constants.LEVEL_01);
 		cameraHelper.setTarget(level.bunnyHead);
 	}
@@ -238,9 +240,13 @@ public class WorldController extends InputAdapter {
 		}
 		// mountains scroll at different speeds
 		level.mountains.updateScrollPosition(cameraHelper.getPosition());
-		// plays the life lost animation as livesVisual catches up to lives
+		// life lost animation goes as livesVisual catches up to lives
 		if (livesVisual > lives)
 			livesVisual = Math.max(lives,  livesVisual - 1 * deltaTime);
+		// score gain animation goes as scoreVisual catches up to new score
+		if (scoreVisual < score)
+			scoreVisual = Math.min(score,  scoreVisual 
+					+ 250 * deltaTime);
 	}
 
 	/**
