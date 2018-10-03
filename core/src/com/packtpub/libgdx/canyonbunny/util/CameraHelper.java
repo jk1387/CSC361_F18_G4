@@ -13,6 +13,9 @@ import com.packtpub.libgdx.canyonbunny.game.objects.AbstractGameObject;
 public class CameraHelper {
 	private static final String TAG = CameraHelper.class.getName();
 	
+	//instance variable from chapter8
+	private final float FOLLOW_SPEED = 4.0f;
+	
 	// dimensions
 	private final float MAX_ZOOM_IN = 0.25f;
 	private final float MAX_ZOOM_OUT = 10.0f;
