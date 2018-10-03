@@ -56,6 +56,9 @@ public class BunnyHead extends AbstractGameObject {
 		// Power-ups
 		hasFeatherPowerup = false;
 		timeLeftFeatherPowerup = 0;
+		// Particles
+		dustParticles.load(Gdx.files.internal("particles/dust.pfx"),
+		Gdx.files.internal("particles"));
 	};
 	
 	public void setJumping (boolean jumpKeyPressed) {
@@ -114,6 +117,7 @@ public class BunnyHead extends AbstractGameObject {
 		     setFeatherPowerup(false);
 	         }
 	  }	
+	dustParticles.update(deltaTime);
    }
 	
 	
@@ -167,5 +171,7 @@ public class BunnyHead extends AbstractGameObject {
 	false);
 	// Reset color to white
 	batch.setColor(1, 1, 1, 1);
+	// Draw Particles
+	dustParticles.draw(batch);
 	}
 }
