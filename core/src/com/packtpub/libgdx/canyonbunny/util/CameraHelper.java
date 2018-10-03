@@ -47,6 +47,9 @@ public class CameraHelper {
 		position.x = target.position.x + target.origin.x;
 		position.y = target.position.y + target.origin.y;
 		
+		//allows the camera to follow
+		position.lerp(target.position, FOLLOW_SPEED * deltaTime);
+		
 		// Prevents camera from moving down too far
 		position.y = Math.max(-1f, position.y);
 	}
