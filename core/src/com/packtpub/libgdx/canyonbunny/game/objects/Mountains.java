@@ -62,10 +62,9 @@ public class Mountains extends AbstractGameObject {
 			
 			// mountain right
 			reg = regMountainRight;
-			batch.draw(reg.getTexture(), origin.x + xRel, position.y + 
-					origin.y + yRel, origin.x, origin.y, dimension.x, dimension.y,
-					scale.x, scale.y, rotation, reg.getRegionX(), reg.getRegionY(),
-					reg.getRegionWidth(), reg.getRegionHeight(), false, false);
+			batch.draw(reg.getTexture(),origin.x + xRel + position.x * parallaxSpeedX,origin.y + yRel + position.y,
+					origin.x, origin.y,dimension.x, dimension.y,scale.x, scale.y,rotation,reg.getRegionX(), reg.getRegionY(),
+					reg.getRegionWidth(), reg.getRegionHeight(),false, false);
 			xRel += dimension.x;
 		}
 		// reset color to white
@@ -74,12 +73,12 @@ public class Mountains extends AbstractGameObject {
 	
 	@Override
 	public void render (SpriteBatch batch) {
-		// distant mountains (dark gray)
-		drawMountain(batch, 0.5f, 0.5f, 0.5f);
-		// distant mountains (gray)
-		drawMountain(batch, 0.25f, 0.25f, 0.7f);
-		// distant mountains (light gray)
-		drawMountain(batch, 0.0f, 0.0f, 0.9f);
+		// 80% distant mountains (dark gray)
+		drawMountain(batch, 0.5f, 0.5f, 0.5f, 0.8f);
+		// 50% distant mountains (gray)
+		drawMountain(batch, 0.25f, 0.25f, 0.7f, 0.5f);
+		// 30% distant mountains (light gray)
+		drawMountain(batch, 0.0f, 0.0f, 0.9f, 0.3f);
 	}
 	
 	//update the scroll position
