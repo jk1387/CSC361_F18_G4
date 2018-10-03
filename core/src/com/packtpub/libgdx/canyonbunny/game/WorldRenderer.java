@@ -9,6 +9,7 @@ import com.packtpub.libgdx.canyonbunny.util.Constants;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.packtpub.libgdx.canyonbunny.util.GamePreferences;
+import com.badlogic.gdx.math.MathUtils;
 
 /**
  * This class renders the world's objects and its GUI.
@@ -147,6 +148,25 @@ public class WorldRenderer implements Disposable {
 			batch.draw(Assets.instance.bunny.head,
 					x + i * 50, y, 50, 50, 120, 100, 0.35f, -0.35f, 0);
 			batch.setColor(1, 1, 1, 1); // sets a color for the bunny head
+		}
+		
+		// draw a temporary bunny head icon that is changed
+		// in its alpha color, scale, and rotation over
+		// time to create a life lost animation. The progress
+		// of this is controlled by livesVisual in WorldController.
+		if (worldController.lives >= 0
+				&& worldController.livesVisual > worldController.lives) {
+			int i = worldController.lives;
+			float alphaColor = Math.max(0,  worldController.livesVisual
+					- worldController.lives - 0.5f);
+			float alphaScale = 0.35f * (2 + worldController.lives
+					- worldController.livesVisual) *2;
+			float alphaRotate = -45 * alphaColor;
+			batch.setColor(1.0f, 0.7f, 0.7f, alphaColor);
+			batch.draw(Assets.instance.bunny.head,
+					x + i * 50, y, 50, 50, 120, 100, alphaScale, -alphaScale,
+					alphaRotate);
+			batch.setColor(1, 1, 1, 1);
 		}
 	}
 	

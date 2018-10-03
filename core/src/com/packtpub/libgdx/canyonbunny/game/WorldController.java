@@ -42,6 +42,8 @@ public class WorldController extends InputAdapter {
 	public int score;
 	private Game game;
 	public CameraHelper cameraHelper;
+	
+	public float livesVisual;
 
 	private Rectangle r1 = new Rectangle();
 	private Rectangle r2 = new Rectangle();
@@ -184,6 +186,7 @@ public class WorldController extends InputAdapter {
 		Gdx.input.setInputProcessor(this);
 		cameraHelper = new CameraHelper();
 		lives = Constants.LIVES_START;
+		livesVisual = lives;
 		timeLeftGameOverDelay = 0;
 		initLevel();
 	}
@@ -235,6 +238,9 @@ public class WorldController extends InputAdapter {
 		}
 		// mountains scroll at different speeds
 		level.mountains.updateScrollPosition(cameraHelper.getPosition());
+		// plays the life lost animation as livesVisual catches up to lives
+		if (livesVisual > lives)
+			livesVisual = Math.max(lives,  livesVisual - 1 * deltaTime);
 	}
 
 	/**
