@@ -52,6 +52,12 @@ public class Clouds extends AbstractGameObject{
 			clouds.add(cloud);
 		}
 	}
+	/**
+	 * Spawn clouds based off of total amount
+	 * of clouds in game,
+	 * set speed of movement 
+	 * @return cloud
+	 */
 	private Cloud spawnCloud() {
 		Cloud cloud = new Cloud();
 		cloud.dimension.set(dimension);
@@ -64,12 +70,33 @@ public class Clouds extends AbstractGameObject{
 		pos.y += MathUtils.random(0.0f, 0.2f)
 		* (MathUtils.randomBoolean() ? 1 : -1); // random additional position
 		cloud.position.set(pos);
+		//speed
+		Vector2 speed = new Vector2();
+		speed.x += 0.5f; //base speed
+		cloud.terminalVelocity.set(speed);
+		speed.x *= -1; //move left by going negative
+		cloud.velocity.set(speed);
 		return cloud;
 		}
-	
+	/**
+	 * Render method for the clouds 
+	 */
 	@Override
 	public void render(SpriteBatch batch) {
 		for(Cloud cloud : clouds)
 			cloud.render(batch);
+	}
+	@Override
+	public void update(float deltaTime) {
+		for(int i = clouds.size - 1; i >= 0; i--) {
+			Cloud cloud = clouds.get(i);
+			cloud.update(deltaTime);
+			if(cloud.position.x < -10) {
+				//cloud moved outside of world.
+				//destroy cloud and spawn a new one at end of lvl
+				clouds.removeIndex(i);
+				clouds.add(spawnCloud());
+			}
+		}
 	}
 }
