@@ -14,6 +14,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 
 public class Assets implements Disposable, AssetErrorListener {
 
@@ -25,6 +27,8 @@ public class Assets implements Disposable, AssetErrorListener {
 	public AssetFeather feather;
 	public AssetLevelDecoration levelDecoration;
 	public AssetFonts fonts;
+	public AssetSounds sounds;
+	public AssetMusic music;
 	
 	private AssetManager assetManager;
 
@@ -168,4 +172,19 @@ public class Assets implements Disposable, AssetErrorListener {
 			TextureFilter.Linear, TextureFilter.Linear);
 		}
 	}
+	
+	/*
+	 * asset sound method
+	 */
+	public class AssetSounds {
+		public final Sound jump;
+		public final Sound jumpWithFeather;
+		public final Sound pickupCoin;
+		public final Sound pickupFeather;
+		public final Sound liveLost;
+		public AssetSounds (AssetManager am) {
+		jump = am.get("sounds/jump.wav", Sound.class);
+		}
+		
+	}	
 }
