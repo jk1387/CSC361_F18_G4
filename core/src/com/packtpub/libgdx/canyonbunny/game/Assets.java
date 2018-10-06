@@ -49,6 +49,17 @@ public class Assets implements Disposable, AssetErrorListener {
 		//load texture atlas
 		assetManager.load(Constants.TEXTURE_ATLAS_OBJECTS, TextureAtlas.class);
 
+		// load sounds
+		assetManager.load("sounds/jump.wav", Sound.class);
+		assetManager.load("sounds/jump_with_feather.wav", Sound.class);
+		assetManager.load("sounds/pickup_coin.wav", Sound.class);
+		assetManager.load("sounds/pickup_feather.wav", Sound.class);
+		assetManager.load("sounds/live_lost.wav", Sound.class);
+		
+		// load music
+		assetManager.load("music/keith303_-_brand_new_highscore.mp3",
+		Music.class);
+		
 		//start loading assets and wait until finished
 		assetManager.finishLoading();
 		Gdx.app.debug(TAG, "# of assets loaded: " + assetManager.getAssetNames().size );
@@ -184,7 +195,23 @@ public class Assets implements Disposable, AssetErrorListener {
 		public final Sound liveLost;
 		public AssetSounds (AssetManager am) {
 		jump = am.get("sounds/jump.wav", Sound.class);
+		jumpWithFeather = am.get("sounds/jump_with_feather.wav",
+		Sound.class);
+		pickupCoin = am.get("sounds/pickup_coin.wav", Sound.class);
+		pickupFeather = am.get("sounds/pickup_feather.wav",
+		Sound.class);
+		liveLost = am.get("sounds/live_lost.wav", Sound.class);
 		}
-		
-	}	
+	}
+	
+	/*
+	 * asset music method
+	 * */
+	public class AssetMusic {
+		public final Music song01;
+		public AssetMusic (AssetManager am) {
+		song01 = am.get("music/keith303_-_brand_new_highscore.mp3",
+		Music.class);
+		}
+	}
 }
