@@ -80,6 +80,8 @@ public class Assets implements Disposable, AssetErrorListener {
 		goldCoin = new AssetGoldCoin(atlas);
 		feather = new AssetFeather(atlas);
 		levelDecoration = new AssetLevelDecoration(atlas);
+		sounds = new AssetSounds(assetManager);
+		music = new AssetMusic(assetManager);
 	}
 
 	// This inner class contains a member variable called "head"
