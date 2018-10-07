@@ -36,7 +36,7 @@ public class AudioManager {
 	 * @param pitch
 	 */
 	public void play(Sound sound, float volume, float pitch) {
-		play(sound,volume, 1);
+		play(sound,volume, pitch, 0);
 	}
 	
 	/**
