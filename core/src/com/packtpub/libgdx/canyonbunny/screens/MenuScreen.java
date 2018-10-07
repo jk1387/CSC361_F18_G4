@@ -25,6 +25,7 @@ import com.packtpub.libgdx.canyonbunny.util.Constants;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.packtpub.libgdx.canyonbunny.util.CharacterSkin;
 import com.packtpub.libgdx.canyonbunny.util.GamePreferences;
+import com.packtpub.libgdx.canyonbunny.util.AudioManager;
 
 /*
  * Author: Drake Conaway
@@ -106,6 +107,9 @@ public class MenuScreen extends AbstractGameScreen {
  private void onSaveClicked(){
 	 saveSettings();
 	 onCancelClicked();
+	 
+	 //starts music
+	 AudioManager.instance.onSettingsUpdated();
  }
  /**
   * Set visibility values after saving
@@ -114,6 +118,9 @@ public class MenuScreen extends AbstractGameScreen {
 	 btnMenuPlay.setVisible(true);
 	 btnMenuOptions.setVisible(true);
 	 winOptions.setVisible(false);
+	 
+	 //starts music
+	 AudioManager.instance.onSettingsUpdated();
  }
  /**
   * Method to rebuild the stage/
