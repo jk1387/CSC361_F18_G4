@@ -9,7 +9,14 @@ import com.packtpub.libgdx.canyonbunny.game.Assets;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.math.MathUtils;
+import com.packtpub.libgdx.canyonbunny.util.AudioManager;
 
+/**
+ * The player object. This has the most interactions across
+ * all other objects in the game.
+ * @author Christian, Drake, Jacob
+ */
 public class BunnyHead extends AbstractGameObject {
 	
 	public ParticleEffect dustParticles = new ParticleEffect();
@@ -67,6 +74,7 @@ public class BunnyHead extends AbstractGameObject {
 		switch (jumpState) {
 		case GROUNDED: // Character is standing on a platform
 		if (jumpKeyPressed) {
+		AudioManager.instance.play(Assets.instance.sounds.jump);
 		// Start counting jump time from the beginning
 		timeJumping = 0;
 		jumpState = JUMP_STATE.JUMP_RISING;
@@ -80,6 +88,10 @@ public class BunnyHead extends AbstractGameObject {
 		case JUMP_FALLING: // Falling down after jump
 			
 		     if (jumpKeyPressed && hasFeatherPowerup) {
+		    	 // jump with feather has a randomized pitch
+		    	AudioManager.instance.play(
+		    			Assets.instance.sounds.jumpWithFeather, 1,
+		    			MathUtils.random(1.0f, 1.1f));
 				timeJumping = JUMP_TIME_OFFSET_FLYING;
 				jumpState = JUMP_STATE.JUMP_RISING;
 				}
