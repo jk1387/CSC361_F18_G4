@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.physics.box2d.Body;
 
 public abstract class AbstractGameObject {
 
@@ -19,6 +20,8 @@ public abstract class AbstractGameObject {
 	public Vector2 friction;
 	public Vector2 acceleration;
 	public Rectangle bounds;
+	//chapter 11
+	public Body body;
 	
 	//abstract constructor
 	public AbstractGameObject () {
@@ -35,14 +38,22 @@ public abstract class AbstractGameObject {
 		bounds = new Rectangle();
 	}
 	
+	/*
+	 * update method for the abstract game object class
+	 */
 	public void update (float deltaTime) {
-	
+		//chapter 11 adds if statement
+		if (body == null) {
 		//chapter 6
 		updateMotionX(deltaTime);
 		updateMotionY(deltaTime);
 		// Move to new position
 		position.x += velocity.x * deltaTime;
 		position.y += velocity.y * deltaTime;
+		} else {
+			position.set(body.getPosition());
+			rotation = body.getAngle() * MathUtils.radiansToDegrees;
+			}
 	}
 	
 	//abstract render method
