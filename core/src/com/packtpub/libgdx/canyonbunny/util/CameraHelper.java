@@ -44,8 +44,8 @@ public class CameraHelper {
 		if (!hasTarget()) return ;
 		
 		// updates the current position
-		position.x = target.position.x + target.origin.x;
-		position.y = target.position.y + target.origin.y;
+		//position.x = target.position.x + target.origin.x;
+		//position.y = target.position.y + target.origin.y;
 		
 		//allows the camera to follow
 		position.lerp(target.position, FOLLOW_SPEED * deltaTime);
