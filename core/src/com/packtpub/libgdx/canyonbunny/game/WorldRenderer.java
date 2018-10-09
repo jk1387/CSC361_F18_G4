@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.packtpub.libgdx.canyonbunny.util.GamePreferences;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
 /**
  * This class renders the world's objects and its GUI.
@@ -20,6 +21,8 @@ public class WorldRenderer implements Disposable {
 	private OrthographicCamera cameraGUI;
 	private SpriteBatch batch;
 	private WorldController worldController;
+	private static final boolean DEBUG_DRAW_BOX2D_WORLD = false;
+	private Box2DDebugRenderer b2debugRenderer;
 	
 	/**
 	 * Initializes the world renderer and creates an
@@ -49,6 +52,7 @@ public class WorldRenderer implements Disposable {
 		cameraGUI.position.set(0, 0, 0); // set origin position for GUI camera
 		cameraGUI.setToOrtho(true); // flip y-axis
 		cameraGUI.update(); // makes sure the camera's updated
+		b2debugRenderer = new Box2DDebugRenderer();
 	}
 	
 	/**
@@ -88,6 +92,10 @@ public class WorldRenderer implements Disposable {
 		batch.begin();
 		worldController.level.render(batch);
 		batch.end();
+		if (DEBUG_DRAW_BOX2D_WORLD) {
+			b2debugRenderer.render(worldController.b2world,
+					camera.combined);
+		}
 	}
 	
 	/**
