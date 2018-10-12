@@ -89,6 +89,50 @@ public class WorldController extends InputAdapter {
 			polygonShape.dispose();
 		}
 	}
+	/**
+	 * Method to spawn carrots within
+	 * the World
+	 */
+	private void spawnCarrots(Vector2 pos, int numCarrots,float radius) {
+		float carrotShapeScale = 0.5f;
+		//create carrots w/ box2d body and fixture
+		for(int i = 0; i <numCarrots;i++) {
+			Carrot carrot = new Carrot();
+			//calc random spawn position,rotation,scale
+			float x = MathUtils.random(-radius,radius);
+			float y = MathUtils.random(5.0f,15.0f);
+			float rotation = MathUtils.random(0.0f,360.f)
+					* MathUtils.degreesToRadians;
+			float carrotScale = MathUtils.random(0.5f,1.5f);
+			carrot.scale.set(carrotScale,carrotScale);
+			//create box2d body for carrot with start position
+			//and angel of rotation
+			BodyDef bodyDef = new BodyDef();
+			bodyDef.position.set(pos);
+			bodyDef.position.add(x,y);
+			bodyDef.angle =rotation;
+			  Body body = b2world.createBody(bodyDef);
+			  body.setType(BodyType.DynamicBody);
+			  carrot.body = body;
+			  //create rectangular shape for carrot to allow
+			  //interactions w/ other objects
+			  PolygonShape polygonShape = new PolygonShape();
+			  float halfWidth = carrot.bounds.width/2.0f * carrotScale;
+			  float halfHeight = carrot.bounds.height/2.0f * carrotScale;
+			  polygonShape.setAsBox(halfWidth*carrotShapeScale,
+					  halfHeight * carrotShapeScale);
+			  //set physics attributes
+			  FixtureDef fixtureDef = new FixtureDef();
+			  fixtureDef.shape = polygonShape;
+			  fixtureDef.density = 50;
+			  fixtureDef.restitution = 0.5f;
+			  fixtureDef.friction = 0.5f;
+			  body.createFixture(fixtureDef);
+			  polygonShape.dispose();
+			  //finally, add new carrot to list for rendering and updating
+			  level.carrots.add(carrot);
+		}
+	}
 	
 	/**
 	 * Boolean checker method for if the game has ended
