@@ -133,6 +133,19 @@ public class WorldController extends InputAdapter {
 			  level.carrots.add(carrot);
 		}
 	}
+	/**
+	 * Method handling bunnyhead collision with goal
+	 * sets goalReached to true
+	 */
+	 private void onCollisionBunnyWithGoal() {
+	 goalReached = true;
+	 timeLeftGameOverDelay = Constants.TIME_DELAY_GAME_FINISHED;
+	  Vector2 centerPosBunnyHead =
+			  new Vector2(level.bunnyHead.position);
+	  centerPosBunnyHead.x += level.bunnyHead.bounds.width;
+	  spawnCarrots(centerPosBunnyHead, Constants.CARROTS_SPAWN_MAX,
+			  Constants.CARROTS_SPAWN_RADIUS);
+	 }
 	
 	/**
 	 * Boolean checker method for if the game has ended
@@ -245,6 +258,14 @@ public class WorldController extends InputAdapter {
 			onCollisionBunnyWithFeather(feather);
 			break;
 		}
+		//Test collision: BunnyHead <->Goal
+		if(!goalReached) {
+			r2.set(level.goal.bounds);
+			r2.x += level.goal.position.x;
+			r2.y += level.goal.position.y;
+			if(r1.overlaps(r2)) onCollisionBunnyWithGoal();
+			
+		}
 	}
 
 	/**
@@ -253,8 +274,10 @@ public class WorldController extends InputAdapter {
 	private void initLevel() {
 		score = 0;
 		scoreVisual = score;
+		goalReached = false; //set goal reached to false at each init
 		level = new Level(Constants.LEVEL_01);
 		cameraHelper.setTarget(level.bunnyHead);
+		initPhysics();
 	}
 
 	/**
@@ -307,7 +330,7 @@ public class WorldController extends InputAdapter {
 	 */
 	public void update(float deltaTime) {
 		handleDebugInput(deltaTime);
-		if (isGameOver()) {
+		if (isGameOver()|| goalReached) {
 			timeLeftGameOverDelay -= deltaTime;
 			if (timeLeftGameOverDelay < 0)
 				backToMenu();
@@ -316,6 +339,7 @@ public class WorldController extends InputAdapter {
 		}
 		level.update(deltaTime);
 		testCollisions();
+		b2world.step(deltaTime, 8, 3);
 		cameraHelper.update(deltaTime);
 		if (!isGameOver() && isPlayerInWater()) {
 			AudioManager.instance.play(Assets.instance.sounds.liveLost);
