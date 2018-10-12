@@ -36,6 +36,7 @@ import com.packtpub.libgdx.canyonbunny.game.objects.Rock;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.Game;
 import com.packtpub.libgdx.canyonbunny.screens.MenuScreen;
+import com.badlogic.gdx.utils.Disposable;
 
 /**
  * Handles the updates in the world. It KNOWS where objects
@@ -44,7 +45,7 @@ import com.packtpub.libgdx.canyonbunny.screens.MenuScreen;
  * positions. Also handles collision detection.
  * @author Drake Conaway, Jacob Kole, Christian Crouthamel
  */
-public class WorldController extends InputAdapter {
+public class WorldController extends InputAdapter implements Disposable {
 
 	private static final String TAG = WorldController.class.getName();
 	public Level level;
@@ -468,5 +469,14 @@ public class WorldController extends InputAdapter {
 	private void backToMenu() {
 		// switch to menu screen
 		game.setScreen(new MenuScreen(game));
+	}
+	/**
+	 * Overridden dispose method
+	 * destorys b2world if its extant
+	 */
+	@Override
+	public void dispose() {
+		if(b2world != null)b2world.dispose();
+		
 	}
 }
