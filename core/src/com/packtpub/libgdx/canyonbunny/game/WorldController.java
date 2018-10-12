@@ -1,6 +1,7 @@
 package com.packtpub.libgdx.canyonbunny.game;
 
 import com.badlogic.gdx.graphics.Pixmap;
+
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -16,6 +17,14 @@ import com.packtpub.libgdx.canyonbunny.game.objects.Rock;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
 import com.badlogic.gdx.math.Rectangle;
 import com.packtpub.libgdx.canyonbunny.util.AudioManager;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
+import com.packtpub.libgdx.canyonbunny.game.objects.Carrot;
 
 // specific objects
 import com.packtpub.libgdx.canyonbunny.game.objects.BunnyHead;
@@ -51,6 +60,36 @@ public class WorldController extends InputAdapter {
 	private Rectangle r2 = new Rectangle();
 	private float timeLeftGameOverDelay;
 
+	private boolean goalReached; //has the goal been reached?
+	public World b2world;
+	/**
+	 * Initialize the physics inside of the world
+	 * using box2d assets
+	 * dispose of excess to free memory
+	 */
+	private void initPhysics() {
+		if(b2world != null) b2world.dispose(); //destroy if already init
+		b2world = new World(new Vector2(0, -9.81f),true);
+		//Rocks
+		Vector2 origin = new Vector2();
+		for(Rock rock : level.rocks) { //for each rock
+			BodyDef bodyDef = new BodyDef();
+			bodyDef.type = BodyType.KinematicBody;
+			bodyDef.position.set(rock.position);
+			 Body body = b2world.createBody(bodyDef);
+			rock.body = body;
+			PolygonShape polygonShape = new PolygonShape();
+			origin.x = rock.bounds.width / 2.0f;
+			origin.y = rock.bounds.width / 2.0f;
+			polygonShape.setAsBox(rock.bounds.width / 2.0f,
+					rock.bounds.height / 2.0f, origin,0);
+			FixtureDef fixtureDef = new FixtureDef();
+			fixtureDef.shape = polygonShape;
+			body.createFixture(fixtureDef);
+			polygonShape.dispose();
+		}
+	}
+	
 	/**
 	 * Boolean checker method for if the game has ended
 	 * @return true if lives are < 0
