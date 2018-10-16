@@ -12,6 +12,8 @@ import com.packtpub.libgdx.canyonbunny.game.objects.WaterOverlay;
 import com.packtpub.libgdx.canyonbunny.game.objects.BunnyHead;
 import com.packtpub.libgdx.canyonbunny.game.objects.Feather;
 import com.packtpub.libgdx.canyonbunny.game.objects.GoldCoin;
+import com.packtpub.libgdx.canyonbunny.game.objects.Carrot;
+import com.packtpub.libgdx.canyonbunny.game.objects.Goal;
 
 /**
  * This class compiles all the game objects and builds the level.
@@ -25,6 +27,8 @@ public class Level {
 	public BunnyHead bunnyHead;
 	public Array<GoldCoin> goldcoins;
 	public Array<Feather> feathers;
+	public Array<Carrot> carrots;
+	public Goal goal;
 	
 	/**
 	 * Grabs the color from the image's pixel and determines
@@ -36,6 +40,7 @@ public class Level {
 		EMPTY(0, 0, 0), // black
 		ROCK(0, 255, 0), // green
 		PLAYER_SPAWNPOINT(255, 255, 255), // white
+		GOAL(255, 0, 0), // red
 		ITEM_FEATHER(255, 0, 255), // purple
 		ITEM_GOLD_COIN(255, 255, 0); // yellow
 		
@@ -89,6 +94,8 @@ public class Level {
 		goldcoins = new Array<GoldCoin>();
 		// feathers array
 		feathers = new Array<Feather>();
+		// carrot array
+		carrots = new Array<Carrot>();
 		
 		// load image file that represents the level data
 		Pixmap pixmap = new Pixmap(Gdx.files.internal(filename));
@@ -153,6 +160,13 @@ public class Level {
 					// set the gold coin then add it to the gold coins array
 					goldcoins.add((GoldCoin)obj);
 				}
+				// goal
+				else if (BLOCK_TYPE.GOAL.sameColor(currentPixel)) {
+					obj = new Goal();
+					offsetHeight = -7.0f;
+					obj.position.set(pixelX, baseHeight + offsetHeight);
+					goal = (Goal)obj;
+				}
 				// unknown object
 				else {
 					int r = 0xff & (currentPixel >>> 24); //red color channel
@@ -188,6 +202,9 @@ public class Level {
 		// Draw Mountains
 		mountains.render(batch);
 		
+		// Draw Goal
+		goal.render(batch);
+		
 		// Draw Rocks
 		for (Rock rock : rocks)
 			rock.render(batch);
@@ -199,6 +216,10 @@ public class Level {
 		// Draw Feathers
 		for (Feather feather : feathers)
 			feather.render(batch);
+		
+		// Draw Carrots
+		for (Carrot carrot : carrots)
+			carrot.render(batch);
 		
 		// Draw Player Character
 		bunnyHead.render(batch);
@@ -235,6 +256,10 @@ public class Level {
 		// aka: have they been picked up yet
 		for(Feather feather : feathers)
 			feather.update(deltaTime);
+		
+		// update carrots
+		for (Carrot carrot : carrots)
+			carrot.update(deltaTime);
 		
 		// keeps the clouds moving
 		clouds.update(deltaTime);

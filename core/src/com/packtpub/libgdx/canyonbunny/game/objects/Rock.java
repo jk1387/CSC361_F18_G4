@@ -124,26 +124,15 @@ public class Rock extends AbstractGameObject {
 	 * times are controlled through here.
 	 */
 	@Override
-	public void update(float deltaTime) {
-		// update delta time
+		public void update (float deltaTime) {
 		super.update(deltaTime);
-
-		// use delta time to calculate time left for that cycle
 		floatCycleTimeLeft -= deltaTime;
-		
-		// rocks need to know their original position
-		// upon initialization
-		if (floatTargetPosition == null)
-			floatTargetPosition = new Vector2(position);
-
-		// resets float time and flips direction
-		// uses Lerp
-		if (floatCycleTimeLeft <= 0) {
+		if (floatCycleTimeLeft<= 0) {
 			floatCycleTimeLeft = FLOAT_CYCLE_TIME;
 			floatingDownwards = !floatingDownwards;
-			floatTargetPosition.y += FLOAT_AMPLITUDE * (floatingDownwards ? -1 : 1);
+			body.setLinearVelocity(0, FLOAT_AMPLITUDE* (floatingDownwards ? -1 : 1));
+		} else {
+			body.setLinearVelocity(body.getLinearVelocity().scl(0.98f));
 		}
-		position.lerp(floatTargetPosition, deltaTime);
 	}
-
 }
