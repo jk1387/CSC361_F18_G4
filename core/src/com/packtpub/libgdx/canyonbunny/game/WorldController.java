@@ -81,7 +81,7 @@ public class WorldController extends InputAdapter implements Disposable {
 			rock.body = body;
 			PolygonShape polygonShape = new PolygonShape();
 			origin.x = rock.bounds.width / 2.0f;
-			origin.y = rock.bounds.width / 2.0f;
+			origin.y = rock.bounds.height / 2.0f;
 			polygonShape.setAsBox(rock.bounds.width / 2.0f,
 					rock.bounds.height / 2.0f, origin,0);
 			FixtureDef fixtureDef = new FixtureDef();
