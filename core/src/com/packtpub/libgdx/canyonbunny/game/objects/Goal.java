@@ -15,7 +15,7 @@ private TextureRegion regGoal; //texture info for goal
 	
 	//set bounding box for collision detection
 	bounds.set(1, Float.MIN_VALUE, 10, Float.MAX_VALUE);
-	origin.set(dimension.x / 2.0f, 0.0f);
+	origin.set(dimension.x / 2.0f, -2.5f);
  }
   public void render(SpriteBatch batch) {
 	  TextureRegion reg = regGoal;
