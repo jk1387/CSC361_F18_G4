@@ -220,7 +220,7 @@ public class WorldController extends InputAdapter implements Disposable {
 		AudioManager.instance.play(Assets.instance.sounds.pickupFeather);
 		score += feather.getScore();
 		level.bunnyHead.setFeatherPowerup(true);
-		Gdx.app.log(TAG, "Featehr collected");
+		Gdx.app.log(TAG, "Feather collected");
 	};
 
 	/**
@@ -333,8 +333,10 @@ public class WorldController extends InputAdapter implements Disposable {
 		handleDebugInput(deltaTime);
 		if (isGameOver()|| goalReached) {
 			timeLeftGameOverDelay -= deltaTime;
-			if (timeLeftGameOverDelay < 0)
+			if (timeLeftGameOverDelay < 0) {
 				backToMenu();
+				return;
+			}
 		} else {
 			handleInputGame(deltaTime);
 		}
