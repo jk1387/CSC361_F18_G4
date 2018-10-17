@@ -122,6 +122,8 @@ public class MenuScreen extends AbstractGameScreen {
 	 btnMenuPlay.setVisible(true);
 	 btnMenuOptions.setVisible(true);
 	 winOptions.setVisible(false);
+	 showMenuButtons(true);
+	 showOptionsWindow(false, true);
 	 
 	 //starts music
 	 AudioManager.instance.onSettingsUpdated();
@@ -245,8 +247,7 @@ public class MenuScreen extends AbstractGameScreen {
 	 selCharSkin.addListener(new ChangeListener() {
 	 @Override
 	 public void changed(ChangeEvent event, Actor actor) {
-	 onCharSkinSelected(((SelectBox<CharacterSkin>)
-	 actor).getSelectedIndex());
+	 onCharSkinSelected(((SelectBox<CharacterSkin>)actor).getSelectedIndex());
 	 }
 	 });
 	 tbl.add(selCharSkin).width(120).padRight(20);
@@ -446,6 +447,8 @@ public class MenuScreen extends AbstractGameScreen {
 		btnMenuPlay.setVisible(false);
 		btnMenuOptions.setVisible(false);
 		winOptions.setVisible(true);
+		showMenuButtons(false);
+		showOptionsWindow(true, true);
 	}
 	
 	/*
