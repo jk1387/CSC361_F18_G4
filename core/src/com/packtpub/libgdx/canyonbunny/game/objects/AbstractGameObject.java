@@ -1,10 +1,12 @@
 package com.packtpub.libgdx.canyonbunny.game.objects;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.graphics.g2d.Animation;
 
 public abstract class AbstractGameObject {
 
@@ -22,6 +24,10 @@ public abstract class AbstractGameObject {
 	public Rectangle bounds;
 	//chapter 11
 	public Body body;
+	// state time of the animation
+	public float stateTime;
+	// current set animation
+	public Animation animation;
 	
 	//abstract constructor
 	public AbstractGameObject () {
@@ -38,10 +44,21 @@ public abstract class AbstractGameObject {
 		bounds = new Rectangle();
 	}
 	
+	/**
+	 * Change the current animation and set the state time
+	 * to 0.
+	 * @param animation the current animation
+	 */
+	public void setAnimation (Animation animation) {
+		this.animation = animation;
+		stateTime = 0;
+	}
+	
 	/*
 	 * update method for the abstract game object class
 	 */
 	public void update (float deltaTime) {
+		stateTime += deltaTime;
 		//chapter 11 adds if statement
 		if (body == null) {
 		//chapter 6
