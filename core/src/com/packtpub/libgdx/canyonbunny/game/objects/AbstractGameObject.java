@@ -2,11 +2,11 @@ package com.packtpub.libgdx.canyonbunny.game.objects;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.graphics.g2d.Animation;
 
 public abstract class AbstractGameObject {
 
@@ -27,7 +27,7 @@ public abstract class AbstractGameObject {
 	// state time of the animation
 	public float stateTime;
 	// current set animation
-	public Animation animation;
+	public Animation<TextureRegion> animation;
 	
 	//abstract constructor
 	public AbstractGameObject () {
@@ -49,7 +49,7 @@ public abstract class AbstractGameObject {
 	 * to 0.
 	 * @param animation the current animation
 	 */
-	public void setAnimation (Animation animation) {
+	public void setAnimation (Animation<TextureRegion> animation) {
 		this.animation = animation;
 		stateTime = 0;
 	}

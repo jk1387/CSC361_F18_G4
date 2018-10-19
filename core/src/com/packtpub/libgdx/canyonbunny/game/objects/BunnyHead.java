@@ -24,10 +24,10 @@ public class BunnyHead extends AbstractGameObject {
 	
 	public ParticleEffect dustParticles = new ParticleEffect();
 	// Animation states
-	private Animation animNormal;
-	private Animation animCopterTransform;
-	private Animation animCopterTransformBack;
-	private Animation animCopterRotate;
+	private Animation<TextureRegion> animNormal;
+	private Animation<TextureRegion> animCopterTransform;
+	private Animation<TextureRegion> animCopterTransformBack;
+	private Animation<TextureRegion> animCopterRotate;
 	
 	//Chapter 6
 	public static final String TAG = BunnyHead.class.getName();
