@@ -49,7 +49,7 @@ public abstract class AbstractGameObject {
 	 * to 0.
 	 * @param animation the current animation
 	 */
-	public void setAnimation(Animation animation){
+	public void setAnimation(Animation<TextureRegion> animation){
 		this.animation = animation;
 		stateTime = 0;
 	}
