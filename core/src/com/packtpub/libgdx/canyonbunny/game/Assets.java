@@ -101,7 +101,7 @@ public class Assets implements Disposable, AssetErrorListener {
 			AtlasRegion region = null;
 			
 			//Animation: Bunny Normal
-			regions =atlas.findRegions("anim_buny_normal");
+			regions =atlas.findRegions("anim_bunny_normal");
 			animNormal = new Animation<TextureRegion>(1.0f/10.0f,regions,
 					Animation.PlayMode.LOOP_PINGPONG);
 			
